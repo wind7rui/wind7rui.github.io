@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Java技术文章，原创我是认真的"><title>开发工程师必会的Linux命令 | JavaQ</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/7.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">开发工程师必会的Linux命令</h1><a id="logo" href="/.">JavaQ</a><p class="description">勤能补拙</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">开发工程师必会的Linux命令</h1><div class="post-meta">Oct 25, 2017<span> | </span><span class="category"><a href="/categories/Linux/">Linux</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><div class="post-content"><h1 id="1-日志查询类"><a href="#1-日志查询类" class="headerlink" title="1.日志查询类"></a>1.日志查询类</h1><ul>
+<li><p>按关键字不分页查询<br>grep “applyId” app.log //applyId为要查询的关键字，app.log为日志名</p>
+</li>
+<li><p>按关键字从前往后分页查询<br>cat -n app.log | grep “applyId” | more<br>以上命令会分页输出，使用空格键翻页，使用回车键显示更多</p>
+</li>
+<li><p>按关键字只显示最后M行查询<br>tail -n M app.log | grep “applyId” //M为行数</p>
+</li>
+<li><p>按关键字动态显示最新M行查询<br>tail -f M app.log | grep “applyId” //M为行数</p>
+</li>
+<li><p>日志太多，将相关日志输出到文件后查看<br>cat -n app.log | grep “applyId” &gt;app-new.log  //app-new.log为文件名</p>
+</li>
+<li><p>按日期范围查询<br>sed -n ‘/2017-10-17 10:10:10/,/2017-10-17 10:15:00/p’  app.log<br>注意：<br>2017-10-17 10:10:10 和 2017-10-17 10:15:00必须是日志中真实打印输出过的</p>
+</li>
+<li><p>动态输出最新M行日志<br>tail -100f app.log</p>
+</li>
+</ul>
+<h1 id="2-端口查询类"><a href="#2-端口查询类" class="headerlink" title="2.端口查询类"></a>2.端口查询类</h1><ul>
+<li><p>查看端口使用情况<br>netstat -tln</p>
+</li>
+<li><p>查看指定端口使用情况<br>netstat -ano | grep 2181 //查看2181端口使用情况</p>
+</li>
+<li><p>查看占用指定端口的进程<br>sudo lsof -i :2181 //查看2181端口被哪个进程占用</p>
+</li>
+</ul>
+<h1 id="3-查看网络连接"><a href="#3-查看网络连接" class="headerlink" title="3.查看网络连接"></a>3.查看网络连接</h1><ul>
+<li><p>列出所有打开的网络连接(tcp和udp)<br>lsof -i</p>
+</li>
+<li><p>列出所有打开的tcp网络连接<br>lsof -i tcp</p>
+</li>
+<li><p>列出所有打开的udp网络连接<br>lsof -i udp</p>
+</li>
+<li><p>列出指定的tcp端口情况<br>lsof -i tcp:80</p>
+</li>
+<li><p>列出指定的udp端口情况<br>lsof -i udp:55</p>
+</li>
+</ul>
+<h1 id="4-查看资源使用情况"><a href="#4-查看资源使用情况" class="headerlink" title="4.查看资源使用情况"></a>4.查看资源使用情况</h1><ul>
+<li><p>查看CPU使用率、内存、虚拟内存交换情况、IO读写情况<br>vmstat 5 //每5秒刷新一次</p>
+</li>
+<li><p>查看系统中各个进程的资源占用状况<br>top  //使用top命令后，按Shift+M, 显示结果将按照进程内存占用率排序</p>
+</li>
+<li><p>查看内存使用情况<br>free -m  //以MB为单位</p>
+</li>
+<li><p>查看磁盘空间使用情况<br>df -h</p>
+</li>
+</ul>
+<h1 id="5-进程操作"><a href="#5-进程操作" class="headerlink" title="5.进程操作"></a>5.进程操作</h1><ul>
+<li><p>根据名称查询进程<br>ps -ef | grep java  //使用标准格式显示<br>ps aux | grep java //使用BSD的格式显示</p>
+</li>
+<li><p>杀掉进程<br>kill -9 pid  //pid为相应的进程号</p>
+</li>
+</ul>
+<h1 id="6-文件复制"><a href="#6-文件复制" class="headerlink" title="6.文件复制"></a>6.文件复制</h1><p>scp是一种安全方式的文件复制，基于ssh</p>
+<ul>
+<li><p>复制本地文件到远程机器<br>复制本地文件app.config到远程192.168.10.190服务器/config/目录下<br>scp /config/app.config root@192.168.10.190:/config/  //root是用户名</p>
+</li>
+<li><p>复制远程文件到本地<br>scp root@192.168.10.190:/config/app.config /config/  //root是用户名</p>
+</li>
+</ul>
+</div><div class="tags"><a href="/tags/Linux/">Linux</a></div><div class="post-nav"><a href="/2017/10/12/记一次java-lang-NoSuchMethodError经历/" class="next">记一次java.lang.NoSuchMethodError经历</a></div></div></div></div><div class="pure-u-1 pure-u-md-1-4"><div id="sidebar"><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java杂记/">Java杂记</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Netflix/">Netflix</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/RPC/">RPC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/">工具</a><span class="category-list-count">1</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Hystrix/" style="font-size: 15px;">Hystrix</a> <a href="/tags/RPC/" style="font-size: 15px;">RPC</a> <a href="/tags/Spring事务/" style="font-size: 15px;">Spring事务</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/动态代理/" style="font-size: 15px;">动态代理</a> <a href="/tags/Spring/" style="font-size: 15px;">Spring</a> <a href="/tags/BTrace/" style="font-size: 15px;">BTrace</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/10/25/开发工程师必会的Linux命令/">开发工程师必会的Linux命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/12/记一次java-lang-NoSuchMethodError经历/">记一次java.lang.NoSuchMethodError经历</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/01/RPC框架的最简单实现/">RPC框架的最简单实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/23/Hystrix实现分布式系统中的故障容错/">我理解的Hystrix</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/22/深入理解Spring系列之十三：IntrospectorCleanupListener解析/">Spring源码学习之十三：IntrospectorCleanupListener解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/02/深入理解Spring系列之十二：-Transactional是如何工作的/">Spring源码学习之十二：@Transactional是如何工作的</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/25/深入理解Spring系列之十一：SpringMVC-RequestBody接收json数据报415/">Spring源码学习之十一：SpringMVC-@RequestBody接收json数据报415</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/16/深入理解Spring系列之十：DispatcherServlet请求分发源码分析/">Spring源码学习之十：DispatcherServlet请求分发源码分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/13/深入理解Spring系列之九：DispatcherServlet初始化源码分析/">Spring源码学习之九：DispatcherServlet初始化源码分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/10/神器BTrace快速入门/">BTrace学习及使用</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://weibo.com/tianrui1990" title="weibo" target="_blank">weibo</a><ul></ul><a href="https://github.com/wind7rui" title="github" target="_blank">github</a><ul></ul><a href="https://mp.weixin.qq.com/s?__biz=MzI0NjUxNTY5Nw==&amp;mid=100000005&amp;idx=1&amp;sn=23c1163016737368c63297651a1cc577&amp;chksm=69bf539b5ec8da8daf70ad1b82765ca742eb7cd97d239aa6beec39c80657770e510258105d6b&amp;mpshare=1&amp;scene=1&amp;srcid=1023eoCrbKmQDZJc1QH0X8i0&amp;key=f703b5ea40997822e30577715e5c6ccba6fa8a32b351cfbd39187fb99b9e508dc8357df8c2071f02ae0fefbfeca6727c49c1fc28e8acbdf6fac841f7e1b250df0aa8e37123543921cafdb767bb4e8112&amp;ascene=0&amp;uin=MjczNjkwMTMyMw%3D%3D&amp;devicetype=iMac+MacBookPro11%2C4+OSX+OSX+10.12.5+build(16F73)&amp;version=12020810&amp;nettype=WIFI&amp;fontScale=100&amp;pass_ticket=xIVqZjegF3Ti8IWJ%2Bx9rZniB4HmWUXEix0C7i5rkGWs%2FeCoPgZR5BFVTXkvB69M4" title="公众号" target="_blank">公众号</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2017 <a href="/." rel="nofollow">JavaQ.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
